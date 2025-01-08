@@ -61,7 +61,7 @@ class Game:
             self.puck_speed_x *= -1
             self.puck_speed_y *= -1
             self.increase_speed()
-            self.collision_cooldown = 10  # Frames before another collision is detected
+            self.collision_cooldown = 100  # Frames before another collision is detected
     
     def apply_inertia(self):
         """Apply inertia to the puck to slow it down."""
