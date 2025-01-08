@@ -97,7 +97,7 @@ class Game:
     def display_scores(self):
         """Display the scores on the screen."""
         font = pygame.font.Font('Pixeled.ttf', 12)
-        player_score_text = font.render(f"Player: {self.player_score}", True, BLACK)
+        player_score_text = font.render(f"Player: {self.player_score}", True, BLACK) # looks better with anti-aliasing?
         opponent_score_text = font.render(f"Opponent: {self.opponent_score}", True, BLACK)
         self.screen.blit(player_score_text, (10, SCREEN_HEIGHT - 40))
         self.screen.blit(opponent_score_text, (10, 10))
