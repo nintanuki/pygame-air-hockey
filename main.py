@@ -103,15 +103,25 @@ class Game:
             # Get the current state of all keys
             keys = pygame.key.get_pressed()
 
-            # Constraining the player to the screen
-            if self.player.top <= 0:
-                self.player.top = 0
+            # Constraining the player to their side of the screen
+            if self.player.top <= SCREEN_HEIGHT / 2:
+                self.player.top = SCREEN_HEIGHT / 2
             if self.player.bottom >= SCREEN_HEIGHT:
                 self.player.bottom = SCREEN_HEIGHT
             if self.player.left <= 0:
                 self.player.left = 0
             if self.player.right >= SCREEN_WIDTH:
                 self.player.right = SCREEN_WIDTH
+                
+            # Constraining the opponent to their side of the screen
+            if self.opponent.top <= 0:
+                self.opponent.top = 0
+            if self.opponent.bottom >= SCREEN_HEIGHT / 2:
+                self.opponent.bottom = SCREEN_HEIGHT / 2
+            if self.opponent.left <= 0:
+                self.opponent.left = 0
+            if self.opponent.right >= SCREEN_WIDTH:
+                self.opponent.right = SCREEN_WIDTH
 
             # Cooldown for collisions
             if self.collision_cooldown > 0:
