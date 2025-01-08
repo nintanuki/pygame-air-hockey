@@ -11,7 +11,6 @@
 - Player or opponent must "serve"
 
 ## Graphics
-- Redraw window to air hockey dimensions
 - Draw a horizontal line in the center of the screen
 - Redraw player and opponent to look air hockey handles?
 - Redraw "ball" to look like a "puck
