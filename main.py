@@ -41,10 +41,10 @@ class Game:
         self.puck_speed_y = PUCK_SPEED
         
         # Colors
-        self.player_color = YELLOW
-        self.opponent_color = GREEN
-        self.puck_color = RED
-        self.bg_color = BLACK
+        self.player_color = RED
+        self.opponent_color = RED
+        self.puck_color = BLACK
+        self.bg_color = WHITE
 
         # Used later to prevent the puck from getting "stuck" in the opponent
         self.collision_cooldown = 0
@@ -56,10 +56,8 @@ class Game:
         # Constrain the puck to the screen
         if self.puck.top <= 0 or self.puck.bottom >= SCREEN_HEIGHT:
             self.puck_speed_y *= -1
-            self.puck_color = random.choice(COLOR_LIST)
         if self.puck.left <= 0 or self.puck.right >= SCREEN_WIDTH:
             self.puck_speed_x *= -1
-            self.puck_color = random.choice(COLOR_LIST)
             
         # Handling collisions with the player
         if self.puck.colliderect(self.player):
