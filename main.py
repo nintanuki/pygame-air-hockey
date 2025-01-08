@@ -80,6 +80,19 @@ class Game:
         if self.puck.y > self.opponent.y:
             self.opponent.y += OPPONENT_SPEED
         
+    def draw_dotted_line(self):
+        """Draws a dotted line in the middle of the screen across the center of the table"""
+        # Set the starting position
+        y = SCREEN_HEIGHT // 2  # Middle of the screen vertically
+        x = 0  # Start from the left side of the screen
+        segment_length = 10  # Length of each dash
+        gap_length = 5  # Length of the gap between dashes
+        
+        # Loop through the width of the screen, drawing segments
+        while x < SCREEN_WIDTH:
+            pygame.draw.line(self.screen, BLACK, (x, y), (x + segment_length, y))
+            x += segment_length + gap_length
+    
     def run(self):
         while True:
             for event in pygame.event.get():
@@ -120,6 +133,7 @@ class Game:
 
             # Visuals
             self.screen.fill(self.bg_color) # Fill the screen with a black background
+            self.draw_dotted_line()
             pygame.draw.rect(self.screen, self.player_color, self.player)
             pygame.draw.rect(self.screen, self.opponent_color, self.opponent)
             pygame.draw.rect(self.screen, self.puck_color, self.puck)
