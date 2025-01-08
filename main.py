@@ -30,10 +30,6 @@ class Game:
         self.player_goal = pygame.Rect((SCREEN_WIDTH / 2) - (SCREEN_WIDTH / 8), SCREEN_HEIGHT - 10, SCREEN_WIDTH / 4, 10)
         self.opponent_goal = pygame.Rect((SCREEN_WIDTH / 2) - (SCREEN_WIDTH / 8), 0, SCREEN_WIDTH / 4, 10)
         
-        # Puck speed
-        self.puck_speed_x = PUCK_SPEED
-        self.puck_speed_y = PUCK_SPEED
-        
         # Scoring
         self.player_score = 0
         self.opponent_score = 0
@@ -98,8 +94,8 @@ class Game:
             # Near opponent
             self.puck.x = (SCREEN_WIDTH / 2) - (PUCK_WIDTH / 2)
             self.puck.y = (SCREEN_HEIGHT / 4) - (PUCK_HEIGHT / 2)
-        self.puck_speed_x = random.choice([-1, 1]) * (PUCK_SPEED / 2)
-        self.puck_speed_y = random.choice([-1, 1]) * (PUCK_SPEED / 2)
+        self.puck_speed_x = random.choice([-1, 1]) * INITIAL_PUCK_SPEED
+        self.puck_speed_y = random.choice([-1, 1]) * INITIAL_PUCK_SPEED
 
     def check_goals(self):
         """Check if the puck has entered a goal."""

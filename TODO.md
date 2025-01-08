@@ -12,7 +12,7 @@
 - **Add sound effects**
 
 ### Issues
-- **Opponent sometimes "corners" the puck in the top corners of the screen**
+- **Opponent "corners" the puck in the top corners of the screen**
 - **Puck still gets stuck "inside" opponent, find better solution than a cooldown timer**
 - **Puck speed and physics needs tweaking, buggy**
 
