@@ -11,3 +11,6 @@
 # Sound
 - **Add music**
 - **Add sound effects**
+
+# Code Improvements
+- **Implement Delta Time**
