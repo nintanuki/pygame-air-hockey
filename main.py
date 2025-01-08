@@ -23,12 +23,8 @@ class Game:
             OPPONENT_WIDTH,
             OPPONENT_HEIGHT
         )
-        self.puck = pygame.Rect(
-            (SCREEN_WIDTH / 2) - (PUCK_WIDTH / 2),  # Center horizontally
-            (SCREEN_HEIGHT / 2) - (PUCK_HEIGHT / 2),  # Center vertically
-            PUCK_WIDTH,
-            PUCK_HEIGHT
-        )
+        self.puck = pygame.Rect(0, 0, PUCK_WIDTH, PUCK_HEIGHT)
+        self.reset_puck()
         
         # Goals
         self.player_goal = pygame.Rect((SCREEN_WIDTH / 2) - (SCREEN_WIDTH / 8), SCREEN_HEIGHT - 10, SCREEN_WIDTH / 4, 10)
@@ -53,20 +49,34 @@ class Game:
         # Constrain the puck to the screen
         if self.puck.top <= 0 or self.puck.bottom >= SCREEN_HEIGHT:
             self.puck_speed_y *= -1
+            self.apply_inertia()
         if self.puck.left <= 0 or self.puck.right >= SCREEN_WIDTH:
             self.puck_speed_x *= -1
+            self.apply_inertia()
             
         # Handling collisions with the player
         if self.puck.colliderect(self.player):
             self.puck_speed_x *= -1
             self.puck_speed_y *= -1
+            self.increase_speed()
             
         # Handling collisions with opponent
         if self.puck.colliderect(self.opponent) and self.collision_cooldown == 0:
             self.puck_speed_x *= -1
             self.puck_speed_y *= -1
+            self.increase_speed()
             self.collision_cooldown = 10  # Frames before another collision is detected
-        
+    
+    def apply_inertia(self):
+        """Apply inertia to the puck to slow it down."""
+        self.puck_speed_x *= 0.9
+        self.puck_speed_y *= 0.9
+    
+    def increase_speed(self):
+        """Increase the puck speed when hit."""
+        self.puck_speed_x *= 1.1
+        self.puck_speed_y *= 1.1
+    
     def opponent_movement(self):
         """Move the opponent towards the puck."""
         if self.puck.x < self.opponent.x:
@@ -80,10 +90,16 @@ class Game:
 
     def reset_puck(self):
         """Reset the puck to the center with a random direction."""
-        self.puck.x = (SCREEN_WIDTH / 2) - (PUCK_WIDTH / 2)
-        self.puck.y = (SCREEN_HEIGHT / 2) - (PUCK_HEIGHT / 2)
-        self.puck_speed_x = random.choice([-PUCK_SPEED, PUCK_SPEED])
-        self.puck_speed_y = random.choice([-PUCK_SPEED, PUCK_SPEED])
+        if random.choice([True, False]):
+            # Near player
+            self.puck.x = (SCREEN_WIDTH / 2) - (PUCK_WIDTH / 2)
+            self.puck.y = (SCREEN_HEIGHT * 3 / 4) - (PUCK_HEIGHT / 2)
+        else:
+            # Near opponent
+            self.puck.x = (SCREEN_WIDTH / 2) - (PUCK_WIDTH / 2)
+            self.puck.y = (SCREEN_HEIGHT / 4) - (PUCK_HEIGHT / 2)
+        self.puck_speed_x = random.choice([-1, 1]) * (PUCK_SPEED / 2)
+        self.puck_speed_y = random.choice([-1, 1]) * (PUCK_SPEED / 2)
 
     def check_goals(self):
         """Check if the puck has entered a goal."""
