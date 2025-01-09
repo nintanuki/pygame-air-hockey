@@ -36,7 +36,7 @@ class Game:
         self.player_score = 0
         self.opponent_score = 0
         
-        # Used later to prevent the puck from getting "stuck" in the opponent
+        # Used later to prevent the puck from getting "stuck" in the opponent (it does not work)
         self.collision_cooldown = 0
         
     def puck_movement(self):
