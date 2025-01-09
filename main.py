@@ -73,11 +73,25 @@ class Game:
         """Apply inertia to the puck to slow it down."""
         self.puck_speed_x *= 0.99
         self.puck_speed_y *= 0.99
+        # self.limit_speed()
     
     def increase_speed(self):
         """Increase the puck speed when hit."""
         self.puck_speed_x *= 1.5
         self.puck_speed_y *= 1.5
+        self.limit_speed()
+    
+    def limit_speed(self):
+        """Cap the puck speed."""
+        if self.puck_speed_x > MAX_SPEED:
+            self.puck_speed_x = MAX_SPEED
+        elif self.puck_speed_x < -MAX_SPEED:
+            self.puck_speed_x = -MAX_SPEED
+
+        if self.puck_speed_y > MAX_SPEED:
+            self.puck_speed_y = MAX_SPEED
+        elif self.puck_speed_y < -MAX_SPEED:
+            self.puck_speed_y = -MAX_SPEED
     
     def opponent_movement(self):
         """Move the opponent towards the puck."""
@@ -141,8 +155,25 @@ class Game:
                     pygame.quit()
                     sys.exit()
                     
-            # Get the current state of all keys
-            keys = pygame.key.get_pressed()
+            # # Get the current state of all keys
+            # keys = pygame.key.get_pressed()
+            
+            # # Update player position based on keys being held down (continuous movement)
+            # if keys[pygame.K_LEFT]:
+            #     self.player.x -= PLAYER_SPEED
+            # if keys[pygame.K_RIGHT]:
+            #     self.player.x += PLAYER_SPEED
+            # if keys[pygame.K_UP]:
+            #     self.player.y -= PLAYER_SPEED
+            # if keys[pygame.K_DOWN]:
+            #     self.player.y += PLAYER_SPEED
+
+            # Get mouse position
+            mouse_x, mouse_y = pygame.mouse.get_pos()
+
+            # Update player position to follow the mouse
+            self.player.centerx = mouse_x
+            self.player.centery = mouse_y
 
             # Constraining the player to their side of the screen
             if self.player.top <= SCREEN_HEIGHT / 2:
@@ -167,16 +198,6 @@ class Game:
             # Cooldown for collisions
             if self.collision_cooldown > 0:
                 self.collision_cooldown -= 1
-
-            # Update player position based on keys being held down (continuous movement)
-            if keys[pygame.K_LEFT]:
-                self.player.x -= PLAYER_SPEED
-            if keys[pygame.K_RIGHT]:
-                self.player.x += PLAYER_SPEED
-            if keys[pygame.K_UP]:
-                self.player.y -= PLAYER_SPEED
-            if keys[pygame.K_DOWN]:
-                self.player.y += PLAYER_SPEED
 
             # Game Logic
             self.puck_movement()
