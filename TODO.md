@@ -14,6 +14,7 @@
   *Opponent "corners" the puck in the top corners of the screen*
   *Puck still gets stuck "inside" opponent, find better solution than a cooldown timer*
 - **Puck speed and physics needs tweaking, buggy**
+- **Player can get "stuck" on the side of the screen**
 
 ### Code Improvements
 - **Implement Delta Time**
