@@ -2,6 +2,7 @@ import pygame
 import sys
 import random
 from settings import *
+from audio import Audio
 
 class Game:
     def __init__(self):
@@ -9,6 +10,7 @@ class Game:
         self.screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
         pygame.display.set_caption('Air Hockey')
         self.clock = pygame.time.Clock()
+        self.audio = Audio()
         
         #Game Rectangles and Positions
         self.player = pygame.Rect(
@@ -61,17 +63,17 @@ class Game:
             self.puck_speed_x *= -1
             self.puck_speed_y *= -1
             self.increase_speed()
-            self.collision_cooldown = 100  # Frames before another collision is detected
+            self.collision_cooldown = 50  # Frames before another collision is detected
     
     def apply_inertia(self):
         """Apply inertia to the puck to slow it down."""
-        self.puck_speed_x *= 0.9
-        self.puck_speed_y *= 0.9
+        self.puck_speed_x *= 0.99
+        self.puck_speed_y *= 0.99
     
     def increase_speed(self):
         """Increase the puck speed when hit."""
-        self.puck_speed_x *= 1.1
-        self.puck_speed_y *= 1.1
+        self.puck_speed_x *= 1.5
+        self.puck_speed_y *= 1.5
     
     def opponent_movement(self):
         """Move the opponent towards the puck."""
@@ -186,6 +188,9 @@ class Game:
             pygame.draw.rect(self.screen, RED, self.opponent)
             pygame.draw.rect(self.screen, BLACK, self.puck)
             self.display_scores()
+            
+            if not self.audio.channel_0.get_busy(): # without this it sounds like static
+                self.audio.channel_0.play(self.audio.bg_music)
             
             pygame.display.flip()
             self.clock.tick(FRAMERATE)
