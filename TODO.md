@@ -4,6 +4,7 @@
   *AI should stop chasing the puck when it is too far so it doesn't hang out in the center when the puck is on the player side*
 - **Add Pause function**
 - **Add high score?**
+- **Add countdown timer after each goal**
 
 ### Physics
 - **Improve Puck Physics**  
@@ -20,3 +21,6 @@
 - **Implement Delta Time**
 - **Separate into classes, files and implement sprites**  
   *Too many functions just for the puck right now...*
+
+### Audio
+- **Add goal sound**
