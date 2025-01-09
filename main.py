@@ -154,19 +154,6 @@ class Game:
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     sys.exit()
-                    
-            # # Get the current state of all keys
-            # keys = pygame.key.get_pressed()
-            
-            # # Update player position based on keys being held down (continuous movement)
-            # if keys[pygame.K_LEFT]:
-            #     self.player.x -= PLAYER_SPEED
-            # if keys[pygame.K_RIGHT]:
-            #     self.player.x += PLAYER_SPEED
-            # if keys[pygame.K_UP]:
-            #     self.player.y -= PLAYER_SPEED
-            # if keys[pygame.K_DOWN]:
-            #     self.player.y += PLAYER_SPEED
 
             # Get mouse position
             mouse_x, mouse_y = pygame.mouse.get_pos()
