@@ -12,7 +12,7 @@
 
 `"The ball typically moves at a given velocity along the x axis, and can have "english", or more y-velocity applied depending on what part of a paddle the ball strikes, or in other versions, how much y velocity the paddle currently has."` - [Pong | Game Mechanics Wiki](https://gamemechanics.fandom.com/wiki/Pong)
 
-![Diagram of the behavior of the ball after hitting the paddle at different angles, ](https://github.com/nintanuki/pygame-air-hockey/blob/main/english.png)
+<img src="https://github.com/nintanuki/pygame-air-hockey/blob/main/english.png" width="200">
 
 ### Issues
 - **On slower speeds...**
