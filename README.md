@@ -1,2 +1,2 @@
 ### Air Hockey
-A simple air hockey game made in Pygame. Everything is drawn in Pygame, no image files or sprites are used. I used the logic from [Clear Code's pong tutorial](https://www.youtube.com/watch?v=Qf3-aDXG8q4) as the basis.
+A simple air hockey game made in Pygame. Everything is drawn in Pygame, no image files or sprites are used. I used the logic from [Clear Code's pong tutorial](https://www.youtube.com/watch?v=Qf3-aDXG8q4) as the basis. Trying to figure out the puck physics was more difficult than I anticipated, and I still haven't worked out all the issues. This is a work in progress.
