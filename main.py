@@ -2,7 +2,6 @@ import pygame
 import sys
 import random
 from settings import *
-from audio import Audio
 
 class Game:
     def __init__(self):
