@@ -36,6 +36,14 @@ class Game:
         self.player_score = 0
         self.opponent_score = 0
         
+        # Fonts
+        self.score_font = pygame.font.Font('Pixeled.ttf', 12)
+        self.countdown_font = pygame.font.Font('Pixeled.ttf', 32)
+        
+        # Countdown state
+        self.countdown = 0  # Time remaining in countdown (in frames)
+
+        
         # Used later to prevent the puck from getting "stuck" in the opponent (it does not work)
         self.collision_cooldown = 0
         
@@ -133,18 +141,21 @@ class Game:
         """Check if the puck has entered a goal."""
         if self.puck.colliderect(self.player_goal):
             self.opponent_score += 1
-            self.reset_puck()
+            self.start_countdown()
             self.audio.channel_2.play(self.audio.score_sound)
         elif self.puck.colliderect(self.opponent_goal):
             self.player_score += 1
-            self.reset_puck()
+            self.start_countdown()
             self.audio.channel_2.play(self.audio.score_sound)
+
+    def start_countdown(self):
+        """Start the countdown timer."""
+        self.countdown = 4 * FRAMERATE  # 3 seconds in frames
 
     def display_scores(self):
         """Display the scores on the screen."""
-        font = pygame.font.Font('Pixeled.ttf', 12)
-        player_score_text = font.render(f"Player: {self.player_score}", True, BLACK) # looks better with anti-aliasing?
-        opponent_score_text = font.render(f"Opponent: {self.opponent_score}", True, BLACK)
+        player_score_text = self.score_font.render(f"Player: {self.player_score}", True, BLACK) # looks better with anti-aliasing?
+        opponent_score_text = self.score_font.render(f"Opponent: {self.opponent_score}", True, BLACK)
         self.screen.blit(player_score_text, (10, SCREEN_HEIGHT - 40))
         self.screen.blit(opponent_score_text, (10, 10))
 
@@ -168,6 +179,28 @@ class Game:
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     sys.exit()
+
+            # Countdown logic
+            if self.countdown > 0:
+                self.countdown -= 1
+                self.screen.fill(WHITE)
+                self.draw_dotted_line()
+                pygame.draw.rect(self.screen, BLUE, self.player_goal)
+                pygame.draw.rect(self.screen, BLUE, self.opponent_goal)
+                self.display_scores()
+                
+                # Display countdown text
+                countdown_number = max(1, self.countdown // FRAMERATE)
+                countdown_text = self.countdown_font.render(str(countdown_number), True, BLACK)
+                text_rect = countdown_text.get_rect(center=(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2))
+                self.screen.blit(countdown_text, text_rect)
+
+                if self.countdown == 0:
+                    self.reset_puck()  # Reset puck when countdown ends
+
+                pygame.display.flip()
+                self.clock.tick(FRAMERATE)
+                continue
 
             # Get mouse position
             mouse_x, mouse_y = pygame.mouse.get_pos()
