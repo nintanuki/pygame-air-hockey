@@ -2,6 +2,7 @@ import pygame
 import sys
 import random
 from settings import *
+from audio import Audio
 
 class Game:
     def __init__(self):
@@ -9,6 +10,7 @@ class Game:
         self.screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
         pygame.display.set_caption('Air Hockey')
         self.clock = pygame.time.Clock()
+        self.audio = Audio()
         
         #Game Rectangles and Positions
         self.player = pygame.Rect(
@@ -48,11 +50,14 @@ class Game:
         # Constrain the puck to the screen
         if self.puck.top <= 0 or self.puck.bottom >= SCREEN_HEIGHT:
             self.puck_speed_y *= -1
+            self.audio.channel_1.play(self.audio.plob_sound)
         if self.puck.left <= 0 or self.puck.right >= SCREEN_WIDTH:
             self.puck_speed_x *= -1
+            self.audio.channel_1.play(self.audio.plob_sound)
             
         # Handling collisions with the player
         if self.puck.colliderect(self.player):
+            self.audio.channel_1.play(self.audio.plob_sound)
             # Calculate relative hit position (how far from the paddle's center)
             relative_x = (self.puck.centerx - self.player.centerx) / (self.player.width / 2)
             relative_y = (self.puck.centery - self.player.centery) / (self.player.height / 2)
@@ -68,6 +73,7 @@ class Game:
             
         # Handling collisions with opponent
         if self.puck.colliderect(self.opponent) and self.collision_cooldown == 0:
+            self.audio.channel_1.play(self.audio.plob_sound)
             self.puck_speed_x *= -1
             self.puck_speed_y *= -1
             self.increase_speed()
@@ -127,9 +133,11 @@ class Game:
         if self.puck.colliderect(self.player_goal):
             self.opponent_score += 1
             self.reset_puck()
+            self.audio.channel_2.play(self.audio.score_sound)
         elif self.puck.colliderect(self.opponent_goal):
             self.player_score += 1
             self.reset_puck()
+            self.audio.channel_2.play(self.audio.score_sound)
 
     def display_scores(self):
         """Display the scores on the screen."""
@@ -213,6 +221,10 @@ class Game:
             pygame.draw.ellipse(self.screen, BLACK, self.puck)
             self.display_scores()
             
+            #Music
+            if not self.audio.channel_0.get_busy(): # without this it sounds like static
+                self.audio.channel_0.play(self.audio.bg_music)
+
             pygame.display.flip()
             self.clock.tick(FRAMERATE)
             
