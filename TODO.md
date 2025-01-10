@@ -16,6 +16,7 @@
 - **Add Pause function**
 - **Add high score?**
 - **Add countdown timer after each goal**
+- **Clicking causes player to shoot up**
 
 ### Code Improvements
 - **Implement Delta Time**

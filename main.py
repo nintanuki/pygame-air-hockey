@@ -39,6 +39,7 @@ class Game:
         # Used later to prevent the puck from getting "stuck" in the opponent (it does not work)
         self.collision_cooldown = 0
         
+        # Calculate the player's velocity to influence the puck's direction
         self.player_velocity = [0, 0]  # Track player paddle velocity (x, y)
         self.prev_player_pos = self.player.center  # Store the previous position
         
@@ -188,8 +189,8 @@ class Game:
             # Constraining the opponent to their side of the screen
             if self.opponent.top <= 0:
                 self.opponent.top = 0
-            if self.opponent.bottom >= SCREEN_HEIGHT / 2:
-                self.opponent.bottom = SCREEN_HEIGHT / 2
+            if self.opponent.bottom >= SCREEN_HEIGHT / 4:
+                self.opponent.bottom = SCREEN_HEIGHT / 4
             if self.opponent.left <= 0:
                 self.opponent.left = 0
             if self.opponent.right >= SCREEN_WIDTH:
