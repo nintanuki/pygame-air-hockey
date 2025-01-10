@@ -47,19 +47,14 @@ class Game:
         # Constrain the puck to the screen
         if self.puck.top <= 0 or self.puck.bottom >= SCREEN_HEIGHT:
             self.puck_speed_y *= -1
-            self.apply_inertia()
-            # self.audio.channel_1.play(self.audio.plob_sound)
         if self.puck.left <= 0 or self.puck.right >= SCREEN_WIDTH:
             self.puck_speed_x *= -1
-            self.apply_inertia()
-            # self.audio.channel_1.play(self.audio.plob_sound)
             
         # Handling collisions with the player
         if self.puck.colliderect(self.player):
             self.puck_speed_x *= -1
             self.puck_speed_y *= -1
             self.increase_speed()
-            # self.audio.channel_1.play(self.audio.plob_sound)
             
         # Handling collisions with opponent
         if self.puck.colliderect(self.opponent) and self.collision_cooldown == 0:
@@ -67,13 +62,10 @@ class Game:
             self.puck_speed_y *= -1
             self.increase_speed()
             self.collision_cooldown = 50  # Frames before another collision is detected
-            # self.audio.channel_1.play(self.audio.plob_sound)
-    
-    def apply_inertia(self):
-        """Apply inertia to the puck to slow it down."""
-        self.puck_speed_x *= 0.99
-        self.puck_speed_y *= 0.99
-        # self.limit_speed()
+
+        # Apply friction
+        self.puck_speed_x *= 0.995
+        self.puck_speed_y *= 0.995
     
     def increase_speed(self):
         """Increase the puck speed when hit."""
@@ -83,15 +75,11 @@ class Game:
     
     def limit_speed(self):
         """Cap the puck speed."""
-        if self.puck_speed_x > MAX_SPEED:
-            self.puck_speed_x = MAX_SPEED
-        elif self.puck_speed_x < -MAX_SPEED:
-            self.puck_speed_x = -MAX_SPEED
-
-        if self.puck_speed_y > MAX_SPEED:
-            self.puck_speed_y = MAX_SPEED
-        elif self.puck_speed_y < -MAX_SPEED:
-            self.puck_speed_y = -MAX_SPEED
+        speed = (self.puck_speed_x ** 2 + self.puck_speed_y ** 2) ** 0.5
+        if speed > MAX_SPEED:
+            scale = MAX_SPEED / speed
+            self.puck_speed_x *= scale
+            self.puck_speed_y *= scale
     
     def opponent_movement(self):
         """Move the opponent towards the puck."""
