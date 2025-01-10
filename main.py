@@ -60,7 +60,7 @@ class Game:
             self.puck_speed_x *= -1
             self.puck_speed_y *= -1
             self.increase_speed()
-            self.collision_cooldown = 50  # Frames before another collision is detected
+            self.collision_cooldown = 30  # Frames before another collision is detected
 
         # Apply friction
         self.puck_speed_x *= 0.995 # Is this the magic number?
