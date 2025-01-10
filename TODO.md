@@ -2,6 +2,7 @@
 
 ### Ideas
 - **Clicking causes player to shoot up**
+- **Display different text based on scores**
 
 ### Issues
 - **Puck still gets stuck "inside" opponent, find better solution than a cooldown timer**

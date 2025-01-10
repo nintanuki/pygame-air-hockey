@@ -26,9 +26,6 @@ class Game:
             OPPONENT_HEIGHT
         )
         self.puck = pygame.Rect(0, 0, PUCK_WIDTH, PUCK_HEIGHT)
-        self.reset_puck()
-        
-        # Goals
         self.player_goal = pygame.Rect((SCREEN_WIDTH / 2) - (SCREEN_WIDTH / 8), SCREEN_HEIGHT - 10, SCREEN_WIDTH / 4, 10)
         self.opponent_goal = pygame.Rect((SCREEN_WIDTH / 2) - (SCREEN_WIDTH / 8), 0, SCREEN_WIDTH / 4, 10)
         
@@ -40,16 +37,19 @@ class Game:
         self.score_font = pygame.font.Font('Pixeled.ttf', 12)
         self.countdown_font = pygame.font.Font('Pixeled.ttf', 32)
         
-        # Countdown state
-        self.countdown = 0  # Time remaining in countdown (in frames)
+        # Countdown timer variables
+        self.countdown = 0
+        self.COUNTDOWN_EVENT = pygame.USEREVENT + 1 # Custom event, the +1 is to avoid conflicts with other events like QUIT
+        self.COUNTDOWN_INTERVAL = 1000  # 1000 ms = 1 second
 
-        
-        # Used later to prevent the puck from getting "stuck" in the opponent (it does not work)
+        # Used later to prevent the puck from getting "stuck" in the opponent
         self.collision_cooldown = 0
         
         # Calculate the player's velocity to influence the puck's direction
         self.player_velocity = [0, 0]  # Track player paddle velocity (x, y)
         self.prev_player_pos = self.player.center  # Store the previous position
+        
+        self.reset_puck()
         
     def puck_movement(self):
         """Move the puck and handles collisions."""
@@ -149,8 +149,10 @@ class Game:
             self.audio.channel_2.play(self.audio.score_sound)
 
     def start_countdown(self):
-        """Start the countdown timer."""
-        self.countdown = 4 * FRAMERATE  # 3 seconds in frames
+        """Countdown between rounds."""
+        self.countdown = 3
+        pygame.time.set_timer(self.COUNTDOWN_EVENT, self.COUNTDOWN_INTERVAL) # Start the timer with a 1 second interval
+
 
     def display_scores(self):
         """Display the scores on the screen."""
@@ -179,10 +181,15 @@ class Game:
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     sys.exit()
+                if event.type == self.COUNTDOWN_EVENT and self.countdown > 0:
+                    self.countdown -= 1
+                    if self.countdown == 0:
+                        pygame.time.set_timer(self.COUNTDOWN_EVENT, 0)  # Stop the timer
+                        self.reset_puck()
 
             # Countdown logic
             if self.countdown > 0:
-                self.countdown -= 1
+                # Still draw everything except the puck and the player/opponent
                 self.screen.fill(WHITE)
                 self.draw_dotted_line()
                 pygame.draw.rect(self.screen, BLUE, self.player_goal)
@@ -190,14 +197,9 @@ class Game:
                 self.display_scores()
                 
                 # Display countdown text
-                countdown_number = max(1, self.countdown // FRAMERATE)
-                countdown_text = self.countdown_font.render(str(countdown_number), True, BLACK)
+                countdown_text = self.countdown_font.render(str(self.countdown), True, BLACK)
                 text_rect = countdown_text.get_rect(center=(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2))
                 self.screen.blit(countdown_text, text_rect)
-
-                if self.countdown == 0:
-                    self.reset_puck()  # Reset puck when countdown ends
-
                 pygame.display.flip()
                 self.clock.tick(FRAMERATE)
                 continue
