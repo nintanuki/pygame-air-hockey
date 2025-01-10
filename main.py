@@ -75,8 +75,11 @@ class Game:
     
     def limit_speed(self):
         """Cap the puck speed."""
+        # calculate the puck's current speed using the Pythagorean theorem.
+        # The speed is the magnitude of the velocity vector
         speed = (self.puck_speed_x ** 2 + self.puck_speed_y ** 2) ** 0.5
         if speed > MAX_SPEED:
+            # A scaling factor (scale) is calculated as the ratio of MAX_SPEED to the current speed.
             scale = MAX_SPEED / speed
             self.puck_speed_x *= scale
             self.puck_speed_y *= scale
