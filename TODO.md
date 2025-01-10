@@ -5,6 +5,7 @@
 `"The ball typically moves at a given velocity along the x axis, and can have "english", or more y-velocity applied depending on what part of a paddle the ball strikes, or in other versions, how much y velocity the paddle currently has."` - [Pong | Game Mechanics Wiki](https://gamemechanics.fandom.com/wiki/Pong)
 
 <img src="https://github.com/nintanuki/pygame-air-hockey/blob/main/english.png" width="200">
+
 - **Inertia is not working properly, no matter what value I set the ball either never slows down or stops completely**
 
 ### Issues
