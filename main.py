@@ -38,6 +38,9 @@ class Game:
         # Used later to prevent the puck from getting "stuck" in the opponent (it does not work)
         self.collision_cooldown = 0
         
+        self.player_velocity = [0, 0]  # Track player paddle velocity (x, y)
+        self.prev_player_pos = self.player.center  # Store the previous position
+        
     def puck_movement(self):
         """Move the puck and handles collisions."""
         self.puck.x += self.puck_speed_x
@@ -51,8 +54,17 @@ class Game:
             
         # Handling collisions with the player
         if self.puck.colliderect(self.player):
-            self.puck_speed_x *= -1
-            self.puck_speed_y *= -1
+            # Calculate relative hit position (how far from the paddle's center)
+            relative_x = (self.puck.centerx - self.player.centerx) / (self.player.width / 2)
+            relative_y = (self.puck.centery - self.player.centery) / (self.player.height / 2)
+
+            # Use relative position to adjust puck's direction
+            self.puck_speed_x = relative_x * INITIAL_PUCK_SPEED  # X speed proportional to hit position
+            self.puck_speed_y = relative_y * INITIAL_PUCK_SPEED  # Y speed proportional to hit position
+
+            # Add paddle's velocity influence
+            self.puck_speed_x += self.player_velocity[0] * 0.5
+            self.puck_speed_y += self.player_velocity[1] * 0.5
             self.increase_speed()
             
         # Handling collisions with opponent
@@ -179,6 +191,13 @@ class Game:
             # Cooldown for collisions
             if self.collision_cooldown > 0:
                 self.collision_cooldown -= 1
+
+            # Calculate player velocity
+            self.player_velocity = [
+                self.player.centerx - self.prev_player_pos[0],
+                self.player.centery - self.prev_player_pos[1],
+            ]
+            self.prev_player_pos = self.player.center
 
             # Game Logic
             self.puck_movement()
