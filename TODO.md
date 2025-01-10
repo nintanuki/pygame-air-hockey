@@ -15,6 +15,7 @@
 - **Puck speed and physics needs tweaking, buggy**
 - **Player can get "stuck" on the side of the screen**
 - **Puck can get "stuck" on the side of the screen**
+- **Prevent opponent from hanging out in the center, limit how far down they can go**
 
 ### Game Logic
 - **Improve opponent AI**  
