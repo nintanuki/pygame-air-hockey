@@ -10,7 +10,6 @@ class Game:
         self.screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
         pygame.display.set_caption('Air Hockey')
         self.clock = pygame.time.Clock()
-        self.audio = Audio()
         
         #Game Rectangles and Positions
         self.player = pygame.Rect(
@@ -64,23 +63,27 @@ class Game:
             self.collision_cooldown = 50  # Frames before another collision is detected
 
         # Apply friction
-        self.puck_speed_x *= 0.995
+        self.puck_speed_x *= 0.995 # Is this the magic number?
         self.puck_speed_y *= 0.995
     
     def increase_speed(self):
         """Increase the puck speed when hit."""
         self.puck_speed_x *= 1.5
         self.puck_speed_y *= 1.5
-        self.limit_speed()
+        self.apply_speed_limit()
     
-    def limit_speed(self):
-        """Cap the puck speed."""
-        # calculate the puck's current speed using the Pythagorean theorem.
-        # The speed is the magnitude of the velocity vector
+    def apply_speed_limit(self):
+        """
+        Ensure the puck does not exceed the speed limit.
+        Calculates the puck's current speed using the Pythagorean theorem.
+        The speed is the magnitude of the velocity vector.
+        Scaling reduces the magnitude of the velocity vector to MAX_SPEED while preserving its direction.
+        The ratio between the horizontal and vertical components remains unchanged, ensuring realistic motion.
+        """
         speed = (self.puck_speed_x ** 2 + self.puck_speed_y ** 2) ** 0.5
-        if speed > MAX_SPEED:
-            # A scaling factor (scale) is calculated as the ratio of MAX_SPEED to the current speed.
-            scale = MAX_SPEED / speed
+        if speed > SPEED_LIMIT:
+            # A scaling factor is calculated as the ratio SPEED_LIMIT to the current speed.
+            scale = SPEED_LIMIT / speed
             self.puck_speed_x *= scale
             self.puck_speed_y *= scale
     
@@ -189,11 +192,8 @@ class Game:
             pygame.draw.rect(self.screen, BLUE, self.opponent_goal)
             pygame.draw.rect(self.screen, RED, self.player)
             pygame.draw.rect(self.screen, RED, self.opponent)
-            pygame.draw.rect(self.screen, BLACK, self.puck)
+            pygame.draw.ellipse(self.screen, BLACK, self.puck)
             self.display_scores()
-            
-            # if not self.audio.channel_0.get_busy(): # without this it sounds like static
-            #     self.audio.channel_0.play(self.audio.bg_music)
             
             pygame.display.flip()
             self.clock.tick(FRAMERATE)
