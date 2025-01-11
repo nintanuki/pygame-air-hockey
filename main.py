@@ -71,27 +71,20 @@ class Game:
 
         # Puck movement when hit by player.
         if self.puck.colliderect(self.player):
-            """
-            Calculate relative hit position (how far from the paddle's center), relative to the paddle's width.
-            Take the difference between the puck's center and the paddle's center on the X and Y axes.
-            Divide by half the width of the paddle, representing the distance from the paddle's center to its edge.
-            0 means the puck hit the center of the paddle, -1 means the left edge, and 1 means the right edge.
-            Store in a variable (relative) that determines the proportion of the puck's speed in the x and y direction based on where it hit the paddle.
-            """
+            """I don't know why this works, but it does."""
+            
+            # Calculate the relative position of the puck to the player paddle
             relative_x = (self.puck.centerx - self.player.centerx) / (self.player.width / 2)
             relative_y = (self.puck.centery - self.player.centery) / (self.player.height / 2)
 
-            """
-            Use relative position to adjust puck's direction
-            The puck's speed and direction are influenced by the collision position.
-            Hitting the paddle closer to the edges will cause more diagonal movement, while hitting the center results in a straighter trajectory.
-            """
-            self.puck_speed_x = relative_x * INITIAL_PUCK_SPEED  # X speed proportional to hit position
-            self.puck_speed_y = relative_y * INITIAL_PUCK_SPEED  # Y speed proportional to hit position
+            # Set the puck's speed based on its relative position to the player paddle
+            self.puck_speed_x = relative_x * INITIAL_PUCK_SPEED
+            self.puck_speed_y = relative_y * INITIAL_PUCK_SPEED
 
-            # Add paddle's velocity influence
+            # Add the player's paddle velocity to the puck's speed for more realistic physics
             self.puck_speed_x += self.player_velocity[0] * 0.5
             self.puck_speed_y += self.player_velocity[1] * 0.5
+            
             self.increase_speed()
             self.audio.channel_1.play(self.audio.plob_sound)
             
