@@ -69,11 +69,7 @@ class Game:
             self.audio.channel_1.play(self.audio.plob_sound)
             
 
-        """
-        Apparently this is the solution to making the puck move in a more realistic way based on where it is hit from.
-        It is the most complicated part of the game. Frustratingly I was not able to figure it out on my own,
-        and I still do not fully understand it. This is probably due to a gap in my knowledge of math and physics.
-        """
+        # Puck movement when hit by player.
         if self.puck.colliderect(self.player):
             """
             Calculate relative hit position (how far from the paddle's center), relative to the paddle's width.
