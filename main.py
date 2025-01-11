@@ -68,14 +68,28 @@ class Game:
             self.puck_speed_x *= -1
             self.audio.channel_1.play(self.audio.plob_sound)
             
-        # Handling collisions with the player
+
+        """
+        Apparently this is the solution to making the puck move in a more realistic way based on where it is hit from.
+        It is the most complicated part of the game. Frustratingly I was not able to figure it out on my own,
+        and I still do not fully understand it. This is probably due to a gap in my knowledge of math and physics.
+        """
         if self.puck.colliderect(self.player):
-            self.audio.channel_1.play(self.audio.plob_sound)
-            # Calculate relative hit position (how far from the paddle's center)
+            """
+            Calculate relative hit position (how far from the paddle's center), relative to the paddle's width.
+            Take the difference between the puck's center and the paddle's center on the X and Y axes.
+            Divide by half the width of the paddle, representing the distance from the paddle's center to its edge.
+            0 means the puck hit the center of the paddle, -1 means the left edge, and 1 means the right edge.
+            Store in a variable (relative) that determines the proportion of the puck's speed in the x and y direction based on where it hit the paddle.
+            """
             relative_x = (self.puck.centerx - self.player.centerx) / (self.player.width / 2)
             relative_y = (self.puck.centery - self.player.centery) / (self.player.height / 2)
 
-            # Use relative position to adjust puck's direction
+            """
+            Use relative position to adjust puck's direction
+            The puck's speed and direction are influenced by the collision position.
+            Hitting the paddle closer to the edges will cause more diagonal movement, while hitting the center results in a straighter trajectory.
+            """
             self.puck_speed_x = relative_x * INITIAL_PUCK_SPEED  # X speed proportional to hit position
             self.puck_speed_y = relative_y * INITIAL_PUCK_SPEED  # Y speed proportional to hit position
 
@@ -83,14 +97,15 @@ class Game:
             self.puck_speed_x += self.player_velocity[0] * 0.5
             self.puck_speed_y += self.player_velocity[1] * 0.5
             self.increase_speed()
+            self.audio.channel_1.play(self.audio.plob_sound)
             
         # Handling collisions with opponent
         if self.puck.colliderect(self.opponent) and self.collision_cooldown == 0:
-            self.audio.channel_1.play(self.audio.plob_sound)
             self.puck_speed_x *= -1
             self.puck_speed_y *= -1
             self.increase_speed()
             self.collision_cooldown = 30  # Frames before another collision is detected
+            self.audio.channel_1.play(self.audio.plob_sound)
 
         # Apply friction
         self.puck_speed_x *= 0.995 # Is this the magic number?
