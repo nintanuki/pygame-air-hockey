@@ -107,7 +107,7 @@ class Game:
         Ensure the puck does not exceed the speed limit.
         Calculates the puck's current speed using the Pythagorean theorem.
         The speed is the magnitude of the velocity vector.
-        Scaling reduces the magnitude of the velocity vector to MAX_SPEED while preserving its direction.
+        Scaling reduces the magnitude of the velocity vector to SPEED_LIMIT while preserving its direction.
         The ratio between the horizontal and vertical components remains unchanged, ensuring realistic motion.
         """
         speed = (self.puck_speed_x ** 2 + self.puck_speed_y ** 2) ** 0.5
