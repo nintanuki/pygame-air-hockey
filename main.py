@@ -49,6 +49,10 @@ class Game:
         self.player_velocity = [0, 0]  # Track player paddle velocity (x, y)
         self.prev_player_pos = self.player.center  # Store the previous position
         
+        self.is_spiking = False # Flag to track if the player is spiking
+        self.spike_speed = 30 # Speed at which the paddle moves upwards when spiking
+
+        
         self.reset_puck()
         
     def puck_movement(self):
@@ -181,6 +185,12 @@ class Game:
                 if event.type == pygame.QUIT:
                     pygame.quit()
                     sys.exit()
+                if event.type == pygame.MOUSEBUTTONDOWN:
+                    if event.button == 1:  # Left mouse button
+                        self.is_spiking = True
+                if event.type == pygame.MOUSEBUTTONUP:
+                    if event.button == 1:  # Left mouse button
+                        self.is_spiking = False
                 if event.type == self.COUNTDOWN_EVENT and self.countdown > 0:
                     self.countdown -= 1
                     if self.countdown == 0:
@@ -210,6 +220,10 @@ class Game:
             # Update player position to follow the mouse
             self.player.centerx = mouse_x
             self.player.centery = mouse_y
+
+            # Move the player up if spiking
+            if self.is_spiking:
+                self.player.y -= self.spike_speed
 
             # Constraining the player to their side of the screen
             if self.player.top <= SCREEN_HEIGHT / 2:
