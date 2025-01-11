@@ -9,6 +9,7 @@
 - **Player can get "stuck" on the side of the screen**
 - **Puck can get "stuck" on the side of the screen or in a corner**
 - **Game is too hard, opponent is a REALLY good goalie even with it's simple AI**
+- **Puck slows down too much and can't be reached, institute minimum speed?**
 
 ### Game Logic
 - **Improve opponent AI**  
