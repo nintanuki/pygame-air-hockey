@@ -71,7 +71,7 @@ class Game:
 
         # Puck movement when hit by player.
         if self.puck.colliderect(self.player):
-            """I don't know why this works, but it does."""
+            """I don't know why this works."""
             
             # Calculate the relative position of the puck to the player paddle
             relative_x = (self.puck.centerx - self.player.centerx) / (self.player.width / 2)
