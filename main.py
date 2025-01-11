@@ -204,6 +204,7 @@ class Game:
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_RETURN:
                         self.audio.channel_0.unpause()
+                        self.audio.channel_4.play(self.audio.unpause_sound)
                         self.paused = False
             
             # Display the paused screen
@@ -237,6 +238,7 @@ class Game:
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_RETURN:  # Press Enter to pause/unpause
                         self.audio.channel_0.pause()
+                        self.audio.channel_3.play(self.audio.pause_sound)
                         self.pause()
                 if event.type == self.COUNTDOWN_EVENT and self.countdown > 0:
                     self.countdown -= 1

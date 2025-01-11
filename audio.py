@@ -17,6 +17,14 @@ class Audio():
         self.score_sound = pygame.mixer.Sound('audio/score.ogg')
         self.score_sound.set_volume(self.master_volume)
         self.channel_2 = pygame.mixer.Channel(2)
+        
+        self.pause_sound = pygame.mixer.Sound('audio/sfx_sounds_pause2_in.wav')
+        self.pause_sound.set_volume(self.master_volume)
+        self.channel_3 = pygame.mixer.Channel(3)
+
+        self.unpause_sound = pygame.mixer.Sound('audio/sfx_sounds_pause2_out.wav')
+        self.unpause_sound.set_volume(self.master_volume)
+        self.channel_4 = pygame.mixer.Channel(4)
 
     # Use this later for volume control
     def update(self):
