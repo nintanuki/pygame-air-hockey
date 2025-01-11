@@ -12,6 +12,10 @@ class Game:
         self.clock = pygame.time.Clock()
         self.audio = Audio()
         
+        # Game State
+        self.game_active = False
+        self.paused = False
+        
         #Game Rectangles and Positions
         self.player = pygame.Rect(
             (SCREEN_WIDTH / 2) - (PLAYER_WIDTH / 2),  # Center horizontally
@@ -188,6 +192,35 @@ class Game:
             pygame.draw.line(self.screen, BLACK, (x, y), (x + segment_length, y))
             x += segment_length + gap_length
     
+    def pause(self):
+        """Pauses game when ENTER is pressed"""
+        self.paused = not self.paused
+        
+        while self.paused:
+            for event in pygame.event.get():
+                if event.type == pygame.QUIT:
+                    pygame.quit()
+                    sys.exit()
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_RETURN:
+                        self.audio.channel_0.unpause()
+                        self.paused = False
+            
+            # Display the paused screen
+            self.screen.fill(WHITE)
+            self.draw_dotted_line()
+            pygame.draw.rect(self.screen, BLUE, self.player_goal)
+            pygame.draw.rect(self.screen, BLUE, self.opponent_goal)
+            self.display_scores()
+
+            # Display "Paused" text
+            paused_text = self.countdown_font.render("PAUSED", True, BLACK)
+            text_rect = paused_text.get_rect(center=(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2))
+            self.screen.blit(paused_text, text_rect)
+
+            pygame.display.flip()
+            self.clock.tick(FRAMERATE)
+    
     def run(self):
         """Main game loop."""
         while True:
@@ -201,6 +234,10 @@ class Game:
                 if event.type == pygame.MOUSEBUTTONUP:
                     if event.button == 1:  # Left mouse button
                         self.is_spiking = False
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_RETURN:  # Press Enter to pause/unpause
+                        self.audio.channel_0.pause()
+                        self.pause()
                 if event.type == self.COUNTDOWN_EVENT and self.countdown > 0:
                     self.countdown -= 1
                     if self.countdown == 0:
