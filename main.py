@@ -120,6 +120,12 @@ class Game:
             scale = SPEED_LIMIT / speed
             self.puck_speed_x *= scale
             self.puck_speed_y *= scale
+            
+        # Ensure the puck does not fall below the initial speed (but this isn't working)
+        if speed < INITIAL_PUCK_SPEED:
+            scale = INITIAL_PUCK_SPEED / speed
+            self.puck_speed_x *= scale
+            self.puck_speed_y *= scale
     
     def opponent_movement(self):
         """Move the opponent towards the puck."""
