@@ -6,6 +6,7 @@
 - **Puck slows down too much and can't be reached, institute minimum speed?**
 
 ### Room for Improvement
+- **Hide mouse**
 - **Add Pause function**
 - **Add high score?**
 - **Add countdown timer after each goal**
