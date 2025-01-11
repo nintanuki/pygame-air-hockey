@@ -1,9 +1,3 @@
-#TODO
-
-### Ideas
-- **Clicking causes player to shoot up**
-- **Display different text based on scores**
-
 ### Issues
 - **Puck still gets stuck "inside" opponent, find better solution than a cooldown timer**
 - **Player can get "stuck" on the side of the screen**
@@ -11,12 +5,17 @@
 - **Game is too hard, opponent is a REALLY good goalie even with it's simple AI**
 - **Puck slows down too much and can't be reached, institute minimum speed?**
 
-### Game Logic
-- **Improve opponent AI**  
-  *AI should not just chase the puck, it should try to get above it and hit it toward the player goal*
+### Room for Improvement
 - **Add Pause function**
 - **Add high score?**
 - **Add countdown timer after each goal**
+- **Add fullscreen option**
+- **Improve opponent AI**  
+  *AI should not just chase the puck, it should try to get above it and hit it toward the player goal*
+
+### Ideas
+- **Clicking causes player to shoot up**
+- **Display different text based on scores**
 
 ### Code Improvements
 - **Implement Delta Time**
