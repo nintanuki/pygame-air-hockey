@@ -251,8 +251,8 @@ class Game:
                 # Still draw everything except the puck and the player/opponent
                 self.screen.fill(WHITE)
                 self.draw_dotted_line()
-                pygame.draw.rect(self.screen, BLUE, self.player_goal)
-                pygame.draw.rect(self.screen, BLUE, self.opponent_goal)
+                pygame.draw.rect(self.screen, BLUE, self.player_goal, border_radius=BORDER_RADIUS)
+                pygame.draw.rect(self.screen, BLUE, self.opponent_goal, border_radius=BORDER_RADIUS)
                 self.display_scores()
                 
                 # Display countdown text
@@ -313,8 +313,8 @@ class Game:
             # Visuals
             self.screen.fill(WHITE) # Fill the screen with a black background
             self.draw_dotted_line()
-            pygame.draw.rect(self.screen, BLUE, self.player_goal)
-            pygame.draw.rect(self.screen, BLUE, self.opponent_goal)
+            pygame.draw.rect(self.screen, BLUE, self.player_goal, border_radius=BORDER_RADIUS)
+            pygame.draw.rect(self.screen, BLUE, self.opponent_goal, border_radius=BORDER_RADIUS)
             pygame.draw.ellipse(self.screen, RED, self.player)
             pygame.draw.ellipse(self.screen, RED, self.opponent)
             pygame.draw.ellipse(self.screen, BLACK, self.puck)
