@@ -315,8 +315,8 @@ class Game:
             self.draw_dotted_line()
             pygame.draw.rect(self.screen, BLUE, self.player_goal)
             pygame.draw.rect(self.screen, BLUE, self.opponent_goal)
-            pygame.draw.rect(self.screen, RED, self.player)
-            pygame.draw.rect(self.screen, RED, self.opponent)
+            pygame.draw.ellipse(self.screen, RED, self.player)
+            pygame.draw.ellipse(self.screen, RED, self.opponent)
             pygame.draw.ellipse(self.screen, BLACK, self.puck)
             self.display_scores()
             
