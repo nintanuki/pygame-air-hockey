@@ -137,7 +137,7 @@ class Game:
             self.puck_speed_y *= scale
     
     def opponent_movement(self):
-        """Move the opponent towards the puck."""
+        """At the moment the AI just chases the puck."""
         if self.puck.x < self.opponent.x:
             self.opponent.x -= OPPONENT_SPEED
         if self.puck.x > self.opponent.x:
