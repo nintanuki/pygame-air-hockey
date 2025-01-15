@@ -336,7 +336,7 @@ class Game:
             pygame.draw.ellipse(self.screen, BLACK, self.puck)
             self.display_scores()
             
-            #Music
+            # Music
             if not self.audio.channel_0.get_busy(): # without this it sounds like static
                 self.audio.channel_0.play(self.audio.bg_music)
 
