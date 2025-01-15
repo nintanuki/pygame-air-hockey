@@ -227,7 +227,6 @@ class Game:
     def run(self):
         """Main game loop."""
         while True:
-            dt = self.clock.tick(FRAMERATE)
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
@@ -341,8 +340,9 @@ class Game:
             if not self.audio.channel_0.get_busy(): # without this it sounds like static
                 self.audio.channel_0.play(self.audio.bg_music)
 
-            debug(dt)
+            debug('test')
             pygame.display.flip()
+            self.clock.tick(FRAMERATE)
             
 if __name__ == '__main__':
     game_manager = Game()
