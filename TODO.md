@@ -7,6 +7,7 @@
 - **Puck can get "stuck" on the side of the screen or in a corner**
 - **Game is too hard, opponent is a REALLY good goalie even with it's simple AI**
 - **Puck slows down too much and can't be reached, institute minimum speed?**
+- **Figure how to use delta time without the puck slowing down**
 
 ### Room for Improvement
 - **Hide the mouse**
