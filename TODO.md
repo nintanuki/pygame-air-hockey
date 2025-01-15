@@ -1,3 +1,6 @@
+### TODO
+- **Add mute icon**
+
 ### Issues
 - **Puck still gets stuck "inside" opponent, find better solution than a cooldown timer**
 - **Player can get "stuck" on the side of the screen**
@@ -7,16 +10,13 @@
 
 ### Room for Improvement
 - **Hide the mouse**
-- **Add Pause function**
 - **Add high score?**
-- **Add countdown timer after each goal**
 - **Add fullscreen option**
 - **Improve opponent AI**  
   *AI should not just chase the puck, it should try to get above it and hit it toward the player goal*
 
 ### Ideas
-- **Clicking causes player to shoot up**
-- **Display different text based on scores**
+- **Display different text (funny messages) based on scores**
 
 ### Code Improvements
 - **Implement Delta Time**
