@@ -4,6 +4,7 @@ import random
 from settings import *
 from audio import Audio
 from debug import debug
+from crt import CRT
 
 class Game:
     def __init__(self):
@@ -12,11 +13,13 @@ class Game:
         pygame.display.set_caption('Air Hockey')
         self.clock = pygame.time.Clock()
         self.audio = Audio()
+        self.crt = CRT(self.screen)
         
         # Game State
         self.game_active = False
         self.paused = False
         self.muted = False
+        self.full_screen = False
         
         #Game Rectangles and Positions
         self.player = pygame.Rect(
@@ -227,6 +230,7 @@ class Game:
     def run(self):
         """Main game loop."""
         while True:
+            dt = self.clock.tick(FRAMERATE) / 1000  # Delta time in seconds
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
@@ -275,6 +279,9 @@ class Game:
                 countdown_text = self.countdown_font.render(str(self.countdown), True, BLACK)
                 text_rect = countdown_text.get_rect(center=(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2))
                 self.screen.blit(countdown_text, text_rect)
+                debug(dt * 1000)
+                if self.full_screen == False: # only draw CRT lines when not in full screen
+                    self.crt.draw()
                 pygame.display.flip()
                 self.clock.tick(FRAMERATE)
                 continue
@@ -340,7 +347,10 @@ class Game:
             if not self.audio.channel_0.get_busy(): # without this it sounds like static
                 self.audio.channel_0.play(self.audio.bg_music)
 
-            debug('test')
+            # Rendering
+            debug(dt * 1000)
+            if self.full_screen == False: # only draw CRT lines when not in full screen
+                self.crt.draw()
             pygame.display.flip()
             self.clock.tick(FRAMERATE)
             
