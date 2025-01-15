@@ -15,7 +15,7 @@ class CRT:
         line_amount = int(SCREEN_HEIGHT / line_height)
         for line in range(line_amount):
             y_pos = line * line_height
-            pygame.draw.line(self.tv,'grey',(0,y_pos),(SCREEN_WIDTH,y_pos),1)
+            pygame.draw.line(self.tv,'blue',(0,y_pos),(SCREEN_WIDTH,y_pos),1)
 
     def draw(self):
         self.tv.set_alpha(random.randint(75,90))
