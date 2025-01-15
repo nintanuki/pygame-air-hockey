@@ -32,3 +32,5 @@ class Audio():
         self.bg_music.set_volume(self.master_volume)
         self.plob_sound.set_volume(self.master_volume)
         self.score_sound.set_volume(self.master_volume)
+        self.pause_sound.set_volume(self.master_volume)
+        self.unpause_sound.set_volume(self.master_volume)

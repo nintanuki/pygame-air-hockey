@@ -3,6 +3,7 @@ import sys
 import random
 from settings import *
 from audio import Audio
+from debug import debug
 
 class Game:
     def __init__(self):
@@ -15,6 +16,7 @@ class Game:
         # Game State
         self.game_active = False
         self.paused = False
+        self.muted = False
         
         #Game Rectangles and Positions
         self.player = pygame.Rect(
@@ -225,6 +227,7 @@ class Game:
     def run(self):
         """Main game loop."""
         while True:
+            dt = self.clock.tick(FRAMERATE)
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     pygame.quit()
@@ -240,6 +243,20 @@ class Game:
                         self.audio.channel_0.pause()
                         self.audio.channel_3.play(self.audio.pause_sound)
                         self.pause()
+                    if event.key == pygame.K_m:  # Press M to mute/unmute
+                        self.muted = not self.muted
+                        if self.muted:
+                            self.audio.channel_0.set_volume(0)
+                            self.audio.channel_1.set_volume(0)
+                            self.audio.channel_2.set_volume(0)
+                            self.audio.channel_3.set_volume(0)
+                            self.audio.channel_4.set_volume(0)
+                        else:
+                            self.audio.channel_0.set_volume(0.5)
+                            self.audio.channel_1.set_volume(0.5)
+                            self.audio.channel_2.set_volume(0.5)
+                            self.audio.channel_3.set_volume(0.5)
+                            self.audio.channel_4.set_volume(0.5)
                 if event.type == self.COUNTDOWN_EVENT and self.countdown > 0:
                     self.countdown -= 1
                     if self.countdown == 0:
@@ -324,8 +341,8 @@ class Game:
             if not self.audio.channel_0.get_busy(): # without this it sounds like static
                 self.audio.channel_0.play(self.audio.bg_music)
 
+            debug(dt)
             pygame.display.flip()
-            self.clock.tick(FRAMERATE)
             
 if __name__ == '__main__':
     game_manager = Game()
