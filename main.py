@@ -9,7 +9,7 @@ from crt import CRT
 class Game:
     def __init__(self):
         pygame.init()
-        self.screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+        self.screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT), pygame.SCALED)
         pygame.display.set_caption('Air Hockey')
         self.clock = pygame.time.Clock()
         self.audio = Audio()
@@ -242,6 +242,9 @@ class Game:
                     if event.button == 1:  # Left mouse button
                         self.is_spiking = False
                 if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_F11:
+                        pygame.display.toggle_fullscreen()
+                        self.full_screen = not self.full_screen
                     if event.key == pygame.K_RETURN:  # Press Enter to pause/unpause
                         self.audio.channel_0.pause()
                         self.audio.channel_3.play(self.audio.pause_sound)
