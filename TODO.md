@@ -21,6 +21,7 @@
 
 ### Code Improvements
 - **Implement Delta Time**
+- **Use Pygame vectors**
 - **Separate into classes, files and implement sprites**  
   *Too many functions just for the puck right now...*
   
